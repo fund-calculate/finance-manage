@@ -120,6 +120,12 @@ export default {
               component: './BizChartsDemo',
             },
             {
+              path: '/fund/fund_position',
+              name: '持仓类型比例统计',
+              icon: 'smile',
+              component: './fund_position',
+            },
+            {
               name: '基金',
               icon: 'crown',
               path: '/fund',
