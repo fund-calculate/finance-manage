@@ -108,6 +108,18 @@ export default {
               component: './DashboardAnalysis',
             },
             {
+              name: '图表测试',
+              icon: 'smile',
+              path: '/fund/emptypage',
+              component: './EmptyPage',
+            },
+            {
+              name: 'BizChartsDemo',
+              icon: 'smile',
+              path: '/bizchartsdemo',
+              component: './BizChartsDemo',
+            },
+            {
               name: '基金',
               icon: 'crown',
               path: '/fund',
