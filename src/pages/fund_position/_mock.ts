@@ -5,7 +5,8 @@ import { AnalysisData, RadarData, VisitDataType } from './data.d';
 const visitData: VisitDataType[] = [];
 const beginDay = new Date().getTime();
 
-const fakeY = [7, 5, 4, 2, 4, 7, 5, 6, 5, 9, 6, 3, 1, 5, 3, 6, 5];
+const fakeY = [10270.55, 7937.17, 10049.84, 10206.99, 8496.63, 8837.71, 10654.20, 14654.20, 16282.17, 18117.95, 23447.29, 27315.49, 40753.94, 38628.58, 39024.14, 39240.60, 40399.86];
+
 for (let i = 0; i < fakeY.length; i += 1) {
   visitData.push({
     x: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD'),

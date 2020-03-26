@@ -21,6 +21,68 @@ const topColResponsiveProps = {
 
 const IntroduceRow = ({ loading, visitData }: { loading: boolean; visitData: VisitDataType[] }) => (
   <Row gutter={24} type="flex">
+
+    <Col {...topColResponsiveProps}>
+      <ChartCard
+        bordered={false}
+        loading={loading}
+        title={<FormattedMessage id="dashboardanalysis.analysis.visits" defaultMessage="Visits" />}
+        action={
+          <Tooltip
+            title={
+              <FormattedMessage id="dashboardanalysis.analysis.introduce" defaultMessage="Introduce" />
+            }
+          >
+            <InfoCircleOutlined />
+          </Tooltip>
+        }
+        total={numeral(40399.86).format('￥0,0.00')}
+        footer={
+          <Field
+            label=
+              {
+                <FormattedMessage id="dashboardanalysis.analysis.day-visits" defaultMessage="Daily Visits" />
+              }
+            value={numeral(1243.42).format('￥0,0.00')}
+          />
+        }
+        contentHeight={46}
+      >
+        <MiniArea color="#975FE4" data={visitData} />
+      </ChartCard>
+    </Col>
+    <Col {...topColResponsiveProps}>
+      <ChartCard
+        bordered={false}
+        loading={loading}
+        title={<FormattedMessage id="dashboardanalysis.analysis.payments" defaultMessage="Payments" />}
+        action={
+          <Tooltip
+            title={
+              <FormattedMessage id="dashboardanalysis.analysis.introduce" defaultMessage="Introduce" />
+            }
+          >
+            <InfoCircleOutlined />
+          </Tooltip>
+        }
+        total={numeral(-3598.50).format('￥0,0.00')}
+        footer={
+          <Field
+            label={
+              <FormattedMessage
+                id="dashboardanalysis.analysis.conversion-rate"
+                defaultMessage="Conversion Rate"
+              />
+            }
+            value="-21%"
+          />
+        }
+        contentHeight={46}
+      >
+        <MiniBar data={visitData} />
+      </ChartCard>
+    </Col>
+
     <Col {...topColResponsiveProps}>
       <ChartCard
         bordered={false}
@@ -59,65 +121,6 @@ const IntroduceRow = ({ loading, visitData }: { loading: boolean; visitData: Vis
       </ChartCard>
     </Col>
 
-    <Col {...topColResponsiveProps}>
-      <ChartCard
-        bordered={false}
-        loading={loading}
-        title={<FormattedMessage id="dashboardanalysis.analysis.visits" defaultMessage="Visits" />}
-        action={
-          <Tooltip
-            title={
-              <FormattedMessage id="dashboardanalysis.analysis.introduce" defaultMessage="Introduce" />
-            }
-          >
-            <InfoCircleOutlined />
-          </Tooltip>
-        }
-        total={numeral(8846).format('0,0')}
-        footer={
-          <Field
-            label={
-              <FormattedMessage id="dashboardanalysis.analysis.day-visits" defaultMessage="Daily Visits" />
-            }
-            value={numeral(1234).format('0,0')}
-          />
-        }
-        contentHeight={46}
-      >
-        <MiniArea color="#975FE4" data={visitData} />
-      </ChartCard>
-    </Col>
-    <Col {...topColResponsiveProps}>
-      <ChartCard
-        bordered={false}
-        loading={loading}
-        title={<FormattedMessage id="dashboardanalysis.analysis.payments" defaultMessage="Payments" />}
-        action={
-          <Tooltip
-            title={
-              <FormattedMessage id="dashboardanalysis.analysis.introduce" defaultMessage="Introduce" />
-            }
-          >
-            <InfoCircleOutlined />
-          </Tooltip>
-        }
-        total={numeral(6560).format('0,0')}
-        footer={
-          <Field
-            label={
-              <FormattedMessage
-                id="dashboardanalysis.analysis.conversion-rate"
-                defaultMessage="Conversion Rate"
-              />
-            }
-            value="60%"
-          />
-        }
-        contentHeight={46}
-      >
-        <MiniBar data={visitData} />
-      </ChartCard>
-    </Col>
     <Col {...topColResponsiveProps}>
       <ChartCard
         loading={loading}
