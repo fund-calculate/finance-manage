@@ -1,14 +1,15 @@
-import { IConfig, IPlugin } from 'umi-types';
+import {IConfig, IPlugin} from 'umi-types';
 import defaultSettings from './defaultSettings'; // https://umijs.org/config/
 
 import slash from 'slash2';
 import themePluginConfig from './themePluginConfig';
 import proxy from './proxy';
 import webpackPlugin from './plugin.config';
-const { pwa } = defaultSettings; // preview.pro.ant.design only do not use in your production ;
+
+const {pwa} = defaultSettings; // preview.pro.ant.design only do not use in your production ;
 // preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
 
-const { ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION, REACT_APP_ENV } = process.env;
+const {ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION, REACT_APP_ENV} = process.env;
 const isAntDesignProPreview = ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site';
 const plugins: IPlugin[] = [
   ['umi-plugin-antd-icon-config', {}],
@@ -34,11 +35,11 @@ const plugins: IPlugin[] = [
       },
       pwa: pwa
         ? {
-            workboxPluginMode: 'InjectManifest',
-            workboxOptions: {
-              importWorkboxFrom: 'local',
-            },
-          }
+          workboxPluginMode: 'InjectManifest',
+          workboxOptions: {
+            importWorkboxFrom: 'local',
+          },
+        }
         : false, // default close dll, because issue https://github.com/ant-design/ant-design-pro/issues/4665
       // dll features https://webpack.js.org/plugins/dll-plugin/
       // dll: {
@@ -108,28 +109,28 @@ export default {
               component: './DashboardAnalysis',
             },
             {
-              name: '图表测试',
+              name: '测试页面',
               icon: 'smile',
-              path: '/fund/emptypage',
-              component: './EmptyPage',
-            },
-            {
-              name: 'BizChartsDemo',
-              icon: 'smile',
-              path: '/bizchartsdemo',
-              component: './BizChartsDemo',
-            },
-            {
-              path: '/fund/fund_position',
-              name: '持仓类型比例统计',
-              icon: 'smile',
-              component: './fund_position',
+              path: '/test',
+              routes: [
+                {
+                  name: '图表测试',
+                  icon: 'smile',
+                  path: '/test/emptypage',
+                  component: './EmptyPage',
+                },
+                {
+                  name: 'BizCharts图表测试',
+                  icon: 'smile',
+                  path: '/test/bizchartsdemo',
+                  component: './BizChartsDemo',
+                },
+              ],
             },
             {
               name: '基金',
               icon: 'crown',
               path: '/fund',
-              component: './DashboardAnalysis',
               routes: [
                 {
                   path: '/fund/sub-page',
@@ -139,11 +140,16 @@ export default {
                   authority: ['admin'],
                 },
                 {
-                  path: '/fund/sub-page1',
+                  path: '/fund/fund_position',
                   name: '持仓类型比例统计',
                   icon: 'smile',
-                  component: './Welcome',
-                  authority: ['admin'],
+                  component: './fund_position',
+                },
+                {
+                  name: '持仓类型表格统计',
+                  icon: 'smile',
+                  path: '/fund/listtablelist',
+                  component: './ListTableList',
                 },
               ],
             },
@@ -151,14 +157,12 @@ export default {
               name: '股票',
               icon: 'smile',
               path: '/stock',
-              component: './DashboardAnalysis',
               routes: [
                 {
-                  path: '/stock/sub-page',
+                  path: '/stock/transactionreasonrecord',
                   name: '买卖原因记录',
                   icon: 'smile',
-                  component: './Welcome',
-                  authority: ['admin'],
+                  component: './TransactionReasonRecord',
                 },
                 {
                   path: '/stock/sub-page1',

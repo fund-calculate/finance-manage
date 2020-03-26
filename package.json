@@ -49,8 +49,10 @@
     "not ie <= 10"
   ],
   "dependencies": {
+    "@ant-design/compatible": "0.0.1-rc.1",
     "@ant-design/icons": "^4.0.3",
     "@ant-design/pro-layout": "^4.10.13",
+    "@ant-design/pro-table": "^1.0.45",
     "@antv/data-set": "^0.11.0",
     "@types/lodash.debounce": "^4.0.6",
     "antd": "^3.23.6",
@@ -71,6 +73,7 @@
     "react-dom": "^16.8.6",
     "react-fittext": "^1.0.0",
     "react-helmet": "^5.2.1",
+    "react-router": "^4.3.1",
     "redux": "^4.0.1",
     "umi": "^2.13.0",
     "umi-plugin-antd-theme": "^1.0.1",
