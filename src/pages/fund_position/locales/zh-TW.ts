@@ -22,7 +22,7 @@ export default {
   'dashboardanalysis.analysis.per-capita-search': '人均搜索次數',
   'dashboardanalysis.analysis.online-top-search': '線上熱門搜索',
   'dashboardanalysis.analysis.the-proportion-of-sales': '銷售額類別占比',
-  'dashboardanalysis.channel.all': '全部渠道',
+  'dashboardanalysis.channel.all': '全部类别',
   'dashboardanalysis.channel.online': '線上',
   'dashboardanalysis.channel.stores': '門店',
   'dashboardanalysis.analysis.sales': '銷售額',

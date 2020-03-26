@@ -11,6 +11,7 @@ import PageLoading from './components/PageLoading';
 import { getTimeDistance } from './utils/utils';
 import { AnalysisData } from './data.d';
 import styles from './style.less';
+import Donut from "@/pages/fund_position/components/BaseRingFigure";
 
 const IntroduceRow = React.lazy(() => import('./components/IntroduceRow'));
 const SalesCard = React.lazy(() => import('./components/SalesCard'));
