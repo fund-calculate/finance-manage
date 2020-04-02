@@ -81,5 +81,5 @@ function getRule(req: Request, res: Response, u: string) {
 }
 
 export default {
-  'GET /fund-position/valuation': getRule
+  'GET /fund-position/aggregation': getRule
 };

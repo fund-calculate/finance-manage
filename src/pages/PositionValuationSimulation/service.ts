@@ -2,7 +2,7 @@ import request from '@/utils/request';
 import { TableListParams } from './data.d';
 
 export async function queryRule(params?: TableListParams) {
-  return request('/fund-position/valuation', {
+  return request('/fund-position/valuationEarnings', {
     params,
   });
 }

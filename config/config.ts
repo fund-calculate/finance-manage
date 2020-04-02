@@ -91,12 +91,12 @@ export default {
     },
     {
       path: '/',
-      component: '../layouts/SecurityLayout',
+      // component: '../layouts/SecurityLayout',
       routes: [
         {
           path: '/',
           component: '../layouts/BasicLayout',
-          authority: ['admin', 'user'],
+          // authority: ['admin', 'user'],
           routes: [
             {
               path: '/',
@@ -133,11 +133,16 @@ export default {
               path: '/fund',
               routes: [
                 {
-                  path: '/fund/sub-page',
+                  path: '/fund/listtablelist',
                   name: '估值模拟',
                   icon: 'smile',
-                  component: './Welcome',
-                  authority: ['admin'],
+                  component: './ListTableList',
+                },
+                {
+                  path: '/fund/PositionValuationSimulation',
+                  name: '持仓估值模拟收益',
+                  icon: 'smile',
+                  component: './PositionValuationSimulation',
                 },
                 {
                   path: '/fund/fund_position',
@@ -146,10 +151,10 @@ export default {
                   component: './fund_position',
                 },
                 {
+                  path: '/fund/sub-page',
                   name: '持仓类型表格统计',
                   icon: 'smile',
-                  path: '/fund/listtablelist',
-                  component: './ListTableList',
+                  component: './Welcome',
                 },
               ],
             },
@@ -169,7 +174,6 @@ export default {
                   name: '股票盈亏分析(买卖原因记录关联)',
                   icon: 'smile',
                   component: './Welcome',
-                  authority: ['admin'],
                 },
               ],
             },
@@ -184,14 +188,12 @@ export default {
                   name: '每月收益统计图',
                   icon: 'smile',
                   component: './Welcome',
-                  authority: ['admin'],
                 },
                 {
                   path: '/earnings/sub-page1',
                   name: '支持多种类型app统计',
                   icon: 'smile',
                   component: './Welcome',
-                  authority: ['admin'],
                 },
               ],
             },

@@ -1,17 +1,18 @@
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
+import {DownOutlined, PlusOutlined} from '@ant-design/icons';
+import {Form} from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Button, Divider, Dropdown, Menu, message } from 'antd';
-import React, { useState, useRef } from 'react';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
+import {Button, Divider, Dropdown, Menu, message} from 'antd';
+import React, {useState, useRef} from 'react';
+import {FormComponentProps} from '@ant-design/compatible/es/form';
+import {PageHeaderWrapper} from '@ant-design/pro-layout';
+import ProTable, {ProColumns, ActionType} from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
-import UpdateForm, { FormValueType } from './components/UpdateForm';
-import { TableListItem } from './data.d';
-import { queryRule, updateRule, addRule, removeRule } from './service';
+import UpdateForm, {FormValueType} from './components/UpdateForm';
+import {TableListItem} from './data.d';
+import {queryRule, updateRule, addRule, removeRule} from './service';
 
-interface TableListProps extends FormComponentProps {}
+interface TableListProps extends FormComponentProps {
+}
 
 /**
  * 添加节点
@@ -84,42 +85,95 @@ const TableList: React.FC<TableListProps> = () => {
   const actionRef = useRef<ActionType>();
   const columns: ProColumns<TableListItem>[] = [
     {
-      title: '基金代码',
-      dataIndex: 'fundCode',
+      title: '基金类型',
+      dataIndex: 'type',
     },
     {
-      title: '基金名称',
-      dataIndex: 'fundName',
+      title: '总持仓成本',
+      dataIndex: 'money',
+      sorter: true,
     },
     {
-      title: '昨天净值',
-      dataIndex: 'worth',
+      title: '持仓比例',
+      dataIndex: 'holdRatio',
+      sorter: true,
     },
     {
-      title: '估值',
-      dataIndex: 'valuation',
+      title: '收益金额',
+      dataIndex: 'earningsPrices',
+      sorter: true,
     },
     {
-      title: '估值涨幅',
+      title: '收益比例',
+      dataIndex: 'earningsRatio',
+      sorter: true,
+    },
+    {
+      title: '当前估值涨幅',
       dataIndex: 'valuationGains',
       sorter: true,
     },
     {
-      title: '更新时间',
-      dataIndex: 'valuationDate',
+      title: '当前市值(昨天)',
+      dataIndex: 'holdShareMoney',
       sorter: true,
-      valueType: 'dateTime',
     },
     {
-      title: '基金类型',
-      dataIndex: 'status',
-      valueEnum: {
-        0: { text: '关闭', status: 'Default' },
-        1: { text: '运行中', status: 'Processing' },
-        2: { text: '已上线', status: 'Success' },
-        3: { text: '异常', status: 'Error' },
-      },
+      title: '今日收益',
+      dataIndex: 'todayGains',
+      sorter: true,
     },
+    // {
+    //   title: '基金代码',
+    //   dataIndex: 'fundCode',
+    // },
+    // {
+    //   title: '基金名称',
+    //   dataIndex: 'fundName',
+    // },
+    // {
+    //   title: '持仓成本',
+    //   dataIndex: 'holdPrices',
+    // },
+    // {
+    //   title: '持仓占比',
+    //   dataIndex: 'holdRatio',
+    // },
+    // {
+    //   title: '收益金额',
+    //   dataIndex: 'earningsPrices',
+    //   sorter: true,
+    // },
+    // {
+    //   title: '当前市值',
+    //   dataIndex: 'holdShareMoney',
+    //   sorter: true,
+    // },
+    // {
+    //   title: '收益比例',
+    //   dataIndex: 'earningsRatio',
+    //   sorter: true,
+    // },
+    // {
+    //   title: '当前估值收益率',
+    //   dataIndex: 'valuationGains',
+    //   sorter: true,
+    // },
+    // {
+    //   title: '今日收益',
+    //   dataIndex: 'todayGains',
+    //   sorter: true,
+    // },
+    // {
+    //   title: '基金类型',
+    //   dataIndex: 'status',
+    //   valueEnum: {
+    //     0: { text: '关闭', status: 'Default' },
+    //     1: { text: '运行中', status: 'Processing' },
+    //     2: { text: '已上线', status: 'Success' },
+    //     3: { text: '异常', status: 'Error' },
+    //   },
+    // },
     {
       title: '操作',
       dataIndex: 'option',
@@ -134,7 +188,7 @@ const TableList: React.FC<TableListProps> = () => {
           >
             配置
           </a>
-          <Divider type="vertical" />
+          <Divider type="vertical"/>
           <a href="">订阅警报</a>
         </>
       ),
@@ -144,11 +198,11 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="查询表格"
+        headerTitle="类型估值模拟收益"
         actionRef={actionRef}
         rowKey="key"
-        toolBarRender={(action, { selectedRows }) => [
-          <Button icon={<PlusOutlined />} type="primary" onClick={() => handleModalVisible(true)}>
+        toolBarRender={(action, {selectedRows}) => [
+          <Button icon={<PlusOutlined/>} type="primary" onClick={() => handleModalVisible(true)}>
             新建
           </Button>,
           selectedRows && selectedRows.length > 0 && (
@@ -169,16 +223,16 @@ const TableList: React.FC<TableListProps> = () => {
               }
             >
               <Button>
-                批量操作 <DownOutlined />
+                批量操作 <DownOutlined/>
               </Button>
             </Dropdown>
           ),
         ]}
         tableAlertRender={(selectedRowKeys, selectedRows) => (
           <div>
-            已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
+            已选择 <a style={{fontWeight: 600}}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
             <span>
-              服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
+              估值总收益 {selectedRows.reduce((pre, item) => pre + item.todayGains, 0)} 元
             </span>
           </div>
         )}
