@@ -1,5 +1,7 @@
 import request from '@/utils/request';
 
 export async function fakeChartData() {
-  return request('/api/fake_chart_data');
+  const response = request('/fund-position/proportionOfStatistical');
+  // const response = request('/test/test');
+  return response;
 }

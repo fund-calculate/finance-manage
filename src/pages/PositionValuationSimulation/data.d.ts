@@ -8,8 +8,8 @@ export interface TableListItem {
   // holdShareMoney: string;
   // valuationGains: string;
   // todayGains: string;
-  holdRatio: string,
-  money: string,
+  holdRatio: number,
+  money: number,
   type: string,
   // funds: [
   //   {
@@ -25,10 +25,10 @@ export interface TableListItem {
   //     todayGains: string
   //   }
   // ],
-  earningsRatio: string,
-  earningsPrices: string,
-  valuationGains: string,
-  holdShareMoney: string,
+  earningsRatio: number,
+  earningsPrices: number,
+  valuationGains: number,
+  holdShareMoney: number,
   todayGains: number
 }
 

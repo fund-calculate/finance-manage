@@ -1,6 +1,6 @@
 export interface VisitDataType {
   x: string;
-  y: number;
+  money: number;
 }
 
 export interface SearchDataType {

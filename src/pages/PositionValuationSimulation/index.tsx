@@ -10,6 +10,7 @@ import CreateForm from './components/CreateForm';
 import UpdateForm, {FormValueType} from './components/UpdateForm';
 import {TableListItem} from './data.d';
 import {queryRule, updateRule, addRule, removeRule} from './service';
+import Trend from "@/pages/DashboardAnalysis/components/Trend";
 
 interface TableListProps extends FormComponentProps {
 }
@@ -91,37 +92,62 @@ const TableList: React.FC<TableListProps> = () => {
     {
       title: '总持仓成本',
       dataIndex: 'money',
-      sorter: true,
-    },
-    {
-      title: '持仓比例',
-      dataIndex: 'holdRatio',
-      sorter: true,
-    },
-    {
-      title: '收益金额',
-      dataIndex: 'earningsPrices',
-      sorter: true,
-    },
-    {
-      title: '收益比例',
-      dataIndex: 'earningsRatio',
-      sorter: true,
-    },
-    {
-      title: '当前估值涨幅',
-      dataIndex: 'valuationGains',
-      sorter: true,
+      sorter: (a, b) => a.money - b.money,
+      render: (text: React.ReactNode) => (
+        <span>{text}元</span>
+      ),
     },
     {
       title: '当前市值(昨天)',
       dataIndex: 'holdShareMoney',
-      sorter: true,
+      sorter: (a, b) => a.holdShareMoney - b.holdShareMoney,
+      render: (text: React.ReactNode) => (
+        <span>{text}元</span>
+      ),
+    },
+    {
+      title: '持仓比例',
+      dataIndex: 'holdRatio',
+      sorter: (a, b) => a.holdRatio - b.holdRatio,
+      render: (text: React.ReactNode) => (
+        <span>{text}%</span>
+      ),
+    },
+    {
+      title: '收益金额',
+      dataIndex: 'earningsPrices',
+      sorter: (a, b) => a.earningsPrices - b.earningsPrices,
+      render: (text: React.ReactNode) => (
+        <span>{text}元</span>
+      ),
+    },
+    {
+      title: '收益比例',
+      dataIndex: 'earningsRatio',
+      sorter: (a, b) => a.earningsRatio - b.earningsRatio,
+      render: (text: React.ReactNode) => (
+        <span>{text}%</span>
+      ),
+    },
+    {
+      title: '当前估值涨幅',
+      dataIndex: 'valuationGains',
+      sorter: (a, b) => a.valuationGains - b.valuationGains,
+      render: (text: React.ReactNode, record: { valuationGains: number }) => (
+        <Trend flag={record.valuationGains < 0 ? 'down' : 'up'}>
+          <span style={{marginRight: 4}}>{text}%</span>
+        </Trend>
+      ),
     },
     {
       title: '今日收益',
       dataIndex: 'todayGains',
-      sorter: true,
+      sorter: (a, b) => a.todayGains - b.todayGains,
+      render: (text: React.ReactNode, record: { todayGains: number }) => (
+        <Trend flag={record.todayGains < 0 ? 'down' : 'up'}>
+          <span style={{marginRight: 4}}>{text}元</span>
+        </Trend>
+      ),
     },
     // {
     //   title: '基金代码',
@@ -199,6 +225,7 @@ const TableList: React.FC<TableListProps> = () => {
     <PageHeaderWrapper>
       <ProTable<TableListItem>
         headerTitle="类型估值模拟收益"
+        size="small"
         actionRef={actionRef}
         rowKey="key"
         toolBarRender={(action, {selectedRows}) => [
@@ -239,6 +266,7 @@ const TableList: React.FC<TableListProps> = () => {
         request={params => queryRule(params)}
         columns={columns}
         rowSelection={{}}
+        pagination={{pageSize: 50}}
       />
       <CreateForm
         onSubmit={async value => {

@@ -1,17 +1,19 @@
-import { DownOutlined, PlusOutlined } from '@ant-design/icons';
-import { Form } from '@ant-design/compatible';
+import {DownOutlined, PlusOutlined} from '@ant-design/icons';
+import {Form} from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import { Button, Divider, Dropdown, Menu, message } from 'antd';
-import React, { useState, useRef } from 'react';
-import { FormComponentProps } from '@ant-design/compatible/es/form';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import ProTable, { ProColumns, ActionType } from '@ant-design/pro-table';
+import {Button, Divider, Dropdown, Menu, message} from 'antd';
+import React, {useState, useRef} from 'react';
+import {FormComponentProps} from '@ant-design/compatible/es/form';
+import {PageHeaderWrapper} from '@ant-design/pro-layout';
+import ProTable, {ProColumns, ActionType} from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
-import UpdateForm, { FormValueType } from './components/UpdateForm';
-import { TableListItem } from './data.d';
-import { queryRule, updateRule, addRule, removeRule } from './service';
+import UpdateForm, {FormValueType} from './components/UpdateForm';
+import {TableListItem} from './data.d';
+import {queryRule, updateRule, addRule, removeRule} from './service';
+import Trend from "@/pages/DashboardAnalysis/components/Trend";
 
-interface TableListProps extends FormComponentProps {}
+interface TableListProps extends FormComponentProps {
+}
 
 /**
  * 添加节点
@@ -102,22 +104,26 @@ const TableList: React.FC<TableListProps> = () => {
     {
       title: '估值涨幅',
       dataIndex: 'valuationGains',
-      sorter: true,
+      sorter: (a, b) => a.valuationGains - b.valuationGains,
+      render: (text: React.ReactNode, record: { valuationGains: number }) => (
+        <Trend flag={record.valuationGains < 0 ? 'down' : 'up'}>
+          <span style={{marginRight: 4}}>{text}%</span>
+        </Trend>
+      ),
     },
     {
       title: '更新时间',
       dataIndex: 'valuationDate',
-      sorter: true,
       valueType: 'dateTime',
     },
     {
       title: '基金类型',
       dataIndex: 'status',
       valueEnum: {
-        0: { text: '关闭', status: 'Default' },
-        1: { text: '运行中', status: 'Processing' },
-        2: { text: '已上线', status: 'Success' },
-        3: { text: '异常', status: 'Error' },
+        0: {text: '关闭', status: 'Default'},
+        1: {text: '运行中', status: 'Processing'},
+        2: {text: '已上线', status: 'Success'},
+        3: {text: '异常', status: 'Error'},
       },
     },
     {
@@ -134,7 +140,7 @@ const TableList: React.FC<TableListProps> = () => {
           >
             配置
           </a>
-          <Divider type="vertical" />
+          <Divider type="vertical"/>
           <a href="">订阅警报</a>
         </>
       ),
@@ -144,11 +150,12 @@ const TableList: React.FC<TableListProps> = () => {
   return (
     <PageHeaderWrapper>
       <ProTable<TableListItem>
-        headerTitle="查询表格"
+        size="small"
+        headerTitle="估值模拟"
         actionRef={actionRef}
         rowKey="key"
-        toolBarRender={(action, { selectedRows }) => [
-          <Button icon={<PlusOutlined />} type="primary" onClick={() => handleModalVisible(true)}>
+        toolBarRender={(action, {selectedRows}) => [
+          <Button icon={<PlusOutlined/>} type="primary" onClick={() => handleModalVisible(true)}>
             新建
           </Button>,
           selectedRows && selectedRows.length > 0 && (
@@ -169,22 +176,23 @@ const TableList: React.FC<TableListProps> = () => {
               }
             >
               <Button>
-                批量操作 <DownOutlined />
+                批量操作 <DownOutlined/>
               </Button>
             </Dropdown>
           ),
         ]}
-        tableAlertRender={(selectedRowKeys, selectedRows) => (
-          <div>
-            已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-            <span>
-              服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
-            </span>
-          </div>
-        )}
+        // tableAlertRender={(selectedRowKeys, selectedRows) => (
+        //   <div>
+        //     已选择 <a style={{ fontWeight: 600 }}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
+        //     <span>
+        //       服务调用次数总计 {selectedRows.reduce((pre, item) => pre + item.callNo, 0)} 万
+        //     </span>
+        //   </div>
+        // )}
         request={params => queryRule(params)}
         columns={columns}
         rowSelection={{}}
+        pagination={{pageSize: 50}}
       />
       <CreateForm
         onSubmit={async value => {

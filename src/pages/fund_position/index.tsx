@@ -152,6 +152,7 @@ class DashboardAnalysis extends Component<
           </Suspense>
 
           <Row gutter={24} type="flex" style={{marginBottom: 24,}}>
+            {/*基金持仓类别占比*/}
             <Col xl={12} lg={24} md={24} sm={24} xs={24}>
               <Suspense fallback={null}>
                 <ProportionSales

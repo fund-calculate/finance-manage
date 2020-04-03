@@ -133,10 +133,10 @@ export default {
               path: '/fund',
               routes: [
                 {
-                  path: '/fund/listtablelist',
+                  path: '/fund/FundValuation',
                   name: '估值模拟',
                   icon: 'smile',
-                  component: './ListTableList',
+                  component: './FundValuation',
                 },
                 {
                   path: '/fund/PositionValuationSimulation',

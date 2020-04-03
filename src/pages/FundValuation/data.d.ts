@@ -5,7 +5,7 @@ export interface TableListItem {
   fundName: string;
   worth: string;
   valuation: string;
-  valuationGains: string;
+  valuationGains: number;
   valuationDate: Date;
 }
 
