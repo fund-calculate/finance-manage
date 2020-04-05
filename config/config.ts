@@ -124,6 +124,12 @@ export default {
                   path: '/test/bizchartsdemo',
                   component: './BizChartsDemo',
                 },
+                {
+                  name: '基础详情页',
+                  icon: 'smile',
+                  path: '/test/profilebasic',
+                  component: './ProfileBasic',
+                },
               ],
             },
             {

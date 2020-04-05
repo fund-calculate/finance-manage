@@ -4,3 +4,7 @@ export interface Earnings {
   earningsPrices: number;
   createTime: string;
 }
+
+export interface BasicProfileDataType {
+  data: Earnings[];
+}

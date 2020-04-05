@@ -1,11 +1,12 @@
 import {AnyAction, Reducer} from 'redux';
+
 import {EffectsCommandMap} from 'dva';
 import {Earnings} from './data';
 import {queryEarnings} from './service';
 
 
 export interface ModalState {
-  list: Earnings[];
+  data: Earnings[];
 }
 
 export type Effect = (
@@ -17,37 +18,38 @@ export interface ModelType {
   namespace: string;
   state: ModalState;
   effects: {
-    getEarningsModel: Effect;
+    fetchBasic: Effect;
   };
   reducers: {
-    save: Reducer<ModalState>;
+    show: Reducer<ModalState>;
   };
 }
 
 const EarningsModel: ModelType = {
   namespace: 'earningsModel',
+
   state: {
-    list: [],
+    data: [],
   },
+
   effects: {
-    * getEarningsModel(_, {call, put}) {
+    * fetchBasic(_, {call, put}) {
       const response = yield call(queryEarnings);
       yield put({
-        type: 'save',
-        payload: response.data,
+        type: 'show',
+        payload: response,
       });
     },
   },
 
   reducers: {
-    save(state, {payload}) {
+    show(state, {payload}) {
       return {
         ...state,
         ...payload,
       };
     },
   },
-
 };
 
 export default EarningsModel;
