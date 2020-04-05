@@ -17,6 +17,11 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
+    '/earnings-statistical/': {
+      target: 'http://127.0.0.1:1000',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
     '/test/': {
       target: 'http://127.0.0.1:1000',
       changeOrigin: true,
