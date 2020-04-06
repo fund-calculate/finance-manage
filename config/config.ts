@@ -188,6 +188,12 @@ export default {
               path: '/earnings',
               routes: [
                 {
+                  name: '总收益',
+                  icon: 'smile',
+                  path: '/earnings/AccumulatedEarnings',
+                  component: './AccumulatedEarnings',
+                },
+                {
                   name: '每月收益统计图',
                   icon: 'smile',
                   path: '/earnings/monthincomestatistics',

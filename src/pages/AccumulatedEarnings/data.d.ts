@@ -7,5 +7,4 @@ export interface Earnings {
 
 export interface BasicProfileDataType {
     data: Earnings[];
-    montyEarningsList: Earnings[];
 }
