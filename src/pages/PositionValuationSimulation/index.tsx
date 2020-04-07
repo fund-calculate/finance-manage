@@ -1,16 +1,19 @@
 import {DownOutlined, PlusOutlined} from '@ant-design/icons';
 import {Form} from '@ant-design/compatible';
 import '@ant-design/compatible/assets/index.css';
-import {Button, Divider, Dropdown, Menu, message} from 'antd';
-import React, {useState, useRef} from 'react';
+import {Button, Divider, Dropdown, Menu, message, Card, Row, Col} from 'antd';
+import React, {useState, useRef, Suspense, Component} from 'react';
 import {FormComponentProps} from '@ant-design/compatible/es/form';
-import {PageHeaderWrapper} from '@ant-design/pro-layout';
+import {GridContent} from '@ant-design/pro-layout';
 import ProTable, {ProColumns, ActionType} from '@ant-design/pro-table';
 import CreateForm from './components/CreateForm';
 import UpdateForm, {FormValueType} from './components/UpdateForm';
 import {TableListItem} from './data.d';
 import {queryRule, updateRule, addRule, removeRule} from './service';
 import Trend from "@/pages/DashboardAnalysis/components/Trend";
+import PageLoading from "@/pages/DashboardAnalysis/components/PageLoading";
+import {Dispatch} from "redux";
+import {BasicProfileDataType} from "@/pages/MonthIncomeStatistics/data";
 
 interface TableListProps extends FormComponentProps {
 }
@@ -149,57 +152,6 @@ const TableList: React.FC<TableListProps> = () => {
         </Trend>
       ),
     },
-    // {
-    //   title: '基金代码',
-    //   dataIndex: 'fundCode',
-    // },
-    // {
-    //   title: '基金名称',
-    //   dataIndex: 'fundName',
-    // },
-    // {
-    //   title: '持仓成本',
-    //   dataIndex: 'holdPrices',
-    // },
-    // {
-    //   title: '持仓占比',
-    //   dataIndex: 'holdRatio',
-    // },
-    // {
-    //   title: '收益金额',
-    //   dataIndex: 'earningsPrices',
-    //   sorter: true,
-    // },
-    // {
-    //   title: '当前市值',
-    //   dataIndex: 'holdShareMoney',
-    //   sorter: true,
-    // },
-    // {
-    //   title: '收益比例',
-    //   dataIndex: 'earningsRatio',
-    //   sorter: true,
-    // },
-    // {
-    //   title: '当前估值收益率',
-    //   dataIndex: 'valuationGains',
-    //   sorter: true,
-    // },
-    // {
-    //   title: '今日收益',
-    //   dataIndex: 'todayGains',
-    //   sorter: true,
-    // },
-    // {
-    //   title: '基金类型',
-    //   dataIndex: 'status',
-    //   valueEnum: {
-    //     0: { text: '关闭', status: 'Default' },
-    //     1: { text: '运行中', status: 'Processing' },
-    //     2: { text: '已上线', status: 'Success' },
-    //     3: { text: '异常', status: 'Error' },
-    //   },
-    // },
     {
       title: '操作',
       dataIndex: 'option',
@@ -222,86 +174,109 @@ const TableList: React.FC<TableListProps> = () => {
   ];
 
   return (
-    <PageHeaderWrapper>
-      <ProTable<TableListItem>
-        headerTitle="类型估值模拟收益"
-        size="small"
-        actionRef={actionRef}
-        rowKey="key"
-        toolBarRender={(action, {selectedRows}) => [
-          <Button icon={<PlusOutlined/>} type="primary" onClick={() => handleModalVisible(true)}>
-            新建
-          </Button>,
-          selectedRows && selectedRows.length > 0 && (
-            <Dropdown
-              overlay={
-                <Menu
-                  onClick={async e => {
-                    if (e.key === 'remove') {
-                      await handleRemove(selectedRows);
-                      action.reload();
-                    }
-                  }}
-                  selectedKeys={[]}
-                >
-                  <Menu.Item key="remove">批量删除</Menu.Item>
-                  <Menu.Item key="approval">批量审批</Menu.Item>
-                </Menu>
-              }
-            >
-              <Button>
-                批量操作 <DownOutlined/>
-              </Button>
-            </Dropdown>
-          ),
-        ]}
-        tableAlertRender={(selectedRowKeys, selectedRows) => (
-          <div>
-            已选择 <a style={{fontWeight: 600}}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
-            <span>
+    <GridContent>
+      <React.Fragment>
+
+        <Suspense fallback={<PageLoading />}>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Card title="今日收益" bordered={false}>
+                Card content
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card title="市值" bordered={false}>
+                Card content
+              </Card>
+            </Col>
+            <Col span={8}>
+              <Card title="持仓金额" bordered={false}>
+                Card content
+              </Card>
+            </Col>
+          </Row>
+        </Suspense>
+
+        <ProTable<TableListItem>
+          headerTitle="类型估值模拟收益"
+          size="small"
+          actionRef={actionRef}
+          rowKey="key"
+          style={{marginTop: 24,}}
+          toolBarRender={(action, {selectedRows}) => [
+            <Button icon={<PlusOutlined/>} type="primary" onClick={() => handleModalVisible(true)}>添加</Button>,
+            selectedRows && selectedRows.length > 0 && (
+              <Dropdown
+                overlay={
+                  <Menu
+                    onClick={async e => {
+                      if (e.key === 'remove') {
+                        await handleRemove(selectedRows);
+                        action.reload();
+                      }
+                    }}
+                    selectedKeys={[]}
+                  >
+                    <Menu.Item key="remove">批量删除</Menu.Item>
+                    <Menu.Item key="approval">批量审批</Menu.Item>
+                  </Menu>
+                }
+              >
+                <Button>
+                  批量操作 <DownOutlined/>
+                </Button>
+              </Dropdown>
+            ),
+          ]}
+          tableAlertRender={(selectedRowKeys, selectedRows) => (
+            <div>
+              已选择 <a style={{fontWeight: 600}}>{selectedRowKeys.length}</a> 项&nbsp;&nbsp;
+              <span>
               估值总收益 {selectedRows.reduce((pre, item) => pre + item.todayGains, 0)} 元
             </span>
-          </div>
-        )}
-        request={params => queryRule(params)}
-        columns={columns}
-        rowSelection={{}}
-        pagination={{pageSize: 50}}
-      />
-      <CreateForm
-        onSubmit={async value => {
-          const success = await handleAdd(value);
-          if (success) {
-            handleModalVisible(false);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
-        onCancel={() => handleModalVisible(false)}
-        modalVisible={createModalVisible}
-      />
-      {stepFormValues && Object.keys(stepFormValues).length ? (
-        <UpdateForm
+            </div>
+          )}
+          request={params => queryRule(params)}
+          columns={columns}
+          // dataSource={a}
+          rowSelection={{}}
+          pagination={{pageSize: 50}}
+        />
+        <CreateForm
           onSubmit={async value => {
-            const success = await handleUpdate(value);
+            const success = await handleAdd(value);
             if (success) {
               handleModalVisible(false);
-              setStepFormValues({});
               if (actionRef.current) {
                 actionRef.current.reload();
               }
             }
           }}
-          onCancel={() => {
-            handleUpdateModalVisible(false);
-            setStepFormValues({});
-          }}
-          updateModalVisible={updateModalVisible}
-          values={stepFormValues}
+          onCancel={() => handleModalVisible(false)}
+          modalVisible={createModalVisible}
         />
-      ) : null}
-    </PageHeaderWrapper>
+        {stepFormValues && Object.keys(stepFormValues).length ? (
+          <UpdateForm
+            onSubmit={async value => {
+              const success = await handleUpdate(value);
+              if (success) {
+                handleModalVisible(false);
+                setStepFormValues({});
+                if (actionRef.current) {
+                  actionRef.current.reload();
+                }
+              }
+            }}
+            onCancel={() => {
+              handleUpdateModalVisible(false);
+              setStepFormValues({});
+            }}
+            updateModalVisible={updateModalVisible}
+            values={stepFormValues}
+          />
+        ) : null}
+      </React.Fragment>
+    </GridContent>
   );
 };
 
