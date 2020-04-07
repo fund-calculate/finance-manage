@@ -7,6 +7,10 @@ export async function queryRule(params?: TableListParams) {
   });
 }
 
+export async function queryEarnings() {
+  return request('/fund-position/valuationEarnings');
+}
+
 export async function removeRule(params: { key: number[] }) {
   return request('/fund-position/valuation', {
     method: 'POST',
