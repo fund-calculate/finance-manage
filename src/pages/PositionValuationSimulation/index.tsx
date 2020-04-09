@@ -1,12 +1,13 @@
 import '@ant-design/compatible/assets/index.css';
-import {Divider, Card, Row, Col, Table} from 'antd';
+import {Divider, Card, Row, Col, Table, Tag} from 'antd';
 import React, {Suspense, Component} from 'react';
 import {GridContent} from '@ant-design/pro-layout';
 import Trend from "@/pages/DashboardAnalysis/components/Trend";
 import {Dispatch} from "redux";
-import {TableListItem} from "./data";
 import {connect} from "dva";
-
+import {Line, StackedBar} from "@antv/g2plot";
+import ReactG2Plot from 'react-g2plot';
+import {TableListItem} from "./data";
 
 interface ProfileBasicProps {
   loading: boolean;
@@ -88,7 +89,7 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
         sorter: (a, b) => a.valuationGains - b.valuationGains,
         render: (text: React.ReactNode, record: { valuationGains: number }) => (
           <Trend flag={record.valuationGains < 0 ? 'down' : 'up'}>
-            <span style={{marginRight: 4}}>{text}%</span>
+            <Tag style={{marginRight: 4}} color={record.valuationGains < 0 ? "green" : "red"}>{text}%</Tag>
           </Trend>
         ),
       },
@@ -98,7 +99,7 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
         sorter: (a, b) => a.todayGains - b.todayGains,
         render: (text: React.ReactNode, record: { todayGains: number }) => (
           <Trend flag={record.todayGains < 0 ? 'down' : 'up'}>
-            <span style={{marginRight: 4}}>{text}元</span>
+            <Tag style={{marginRight: 4}} color={record.todayGains < 0 ? "green" : "red"}>{text}元</Tag>
           </Trend>
         ),
       },
@@ -119,15 +120,52 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
       },
     ];
 
+    // const data1 = [
+    //   { year: '1991', value: 3 },
+    //   { year: '1992', value: 4 },
+    //   { year: '1993', value: 3.5 },
+    //   { year: '1994', value: 5 },
+    //   { year: '1995', value: 4.9 },
+    //   { year: '1996', value: 6 },
+    //   { year: '1997', value: 7 },
+    //   { year: '1998', value: 9 },
+    //   { year: '1999', value: 13 },
+    // ];
+    //
+    // const config1 = {
+    //   title: {
+    //     visible: true,
+    //     text: '带数据点的折线图',
+    //   },
+    //   description: {
+    //     visible: true,
+    //     text: '将折线图上的每一个数据点显示出来，作为辅助阅读。',
+    //   },
+    //   forceFit: true,
+    //   padding: 'auto',
+    //   data1,
+    //   xField: 'year',
+    //   yField: 'value',
+    //   point: {
+    //     visible: true,
+    //   },
+    //   label: {
+    //     visible: true,
+    //     type: 'point',
+    //   },
+    // };
+
     return (
       <GridContent>
         <React.Fragment>
-
+          {/*<ReactG2Plot className="test" Ctor={Line} config={config1}/>*/}
           <Row gutter={16}>
             <Col span={8}>
               <Card title="今日收益" bordered={false}>
                 <Trend flag={todayGains < 0 ? 'down' : 'up'}>
-                  <span style={{marginRight: 4}}>{todayGains.toFixed(2)}元</span>
+                  <Tag style={{marginRight: 4}} color={todayGains < 0 ? "green" : "red"}>
+                    {todayGains.toFixed(2)}元
+                  </Tag>
                 </Trend>
               </Card>
             </Col>

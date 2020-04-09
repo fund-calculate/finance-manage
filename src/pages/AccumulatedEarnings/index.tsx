@@ -18,6 +18,7 @@ interface ProfileBasicState {
 }
 
 class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
+
   componentDidMount() {
     const {dispatch} = this.props;
     dispatch({

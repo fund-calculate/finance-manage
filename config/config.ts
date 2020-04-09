@@ -145,21 +145,15 @@ export default {
                 },
                 {
                   path: '/fund/PositionValuationSimulation',
-                  name: '持仓估值模拟收益',
+                  name: '持仓估值收益',
                   icon: 'smile',
                   component: './PositionValuationSimulation',
                 },
                 {
                   path: '/fund/fund_position',
-                  name: '持仓类型比例统计',
+                  name: '持仓类型统计',
                   icon: 'smile',
                   component: './fund_position',
-                },
-                {
-                  path: '/fund/sub-page',
-                  name: '持仓类型表格统计',
-                  icon: 'smile',
-                  component: './Welcome',
                 },
               ],
             },
