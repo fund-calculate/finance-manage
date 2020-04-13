@@ -12,11 +12,25 @@ export default {
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
-    '/fund-position/': {
+    // 基金估值
+    '/fund-valution/': {
       target: 'http://127.0.0.1:1000',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
+    // 自选基金
+    '/fund-optional/': {
+      target: 'http://127.0.0.1:1000',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    // 基金持仓
+    '/fund-hold/': {
+      target: 'http://127.0.0.1:1000',
+      changeOrigin: true,
+      pathRewrite: { '^': '' },
+    },
+    // 收益统计
     '/earnings-statistical/': {
       target: 'http://127.0.0.1:1000',
       changeOrigin: true,

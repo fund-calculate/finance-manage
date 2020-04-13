@@ -1,35 +1,27 @@
-export interface TableListItem {
+export interface FundTypeValuation {
   key: number;
   disabled?: boolean;
-  // fundCode: string;
-  // fundName: string;
-  // earningsRatio: string;
-  // earningsPrices: string;
-  // holdShareMoney: string;
-  // valuationGains: string;
-  // todayGains: string;
   holdRatio: number,
   money: number,
   type: string,
-  // funds: [
-  //   {
-  //     fundCode: string,
-  //     fundName: string,
-  //     holdPrices: string,
-  //     holdRatio: string,
-  //     type: string,
-  //     earningsRatio: string,
-  //     earningsPrices: string,
-  //     holdShareMoney: string,
-  //     valuationGains: string,
-  //     todayGains: string
-  //   }
-  // ],
   earningsRatio: number,
   earningsPrices: number,
   valuationGains: number,
   holdShareMoney: number,
   todayGains: number
+}
+
+export interface Aggregation {
+  // 今日收益
+  todayGains: number;
+  // 今日收益比例
+  todayEarningsRatio: number;
+  // 今日收益
+  holdShareMoney: number;
+  // 当前市值
+  holdPrices: number;
+  // 分类
+  fundTypeValuation: FundTypeValuation[];
 }
 
 export interface TableListPagination {

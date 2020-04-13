@@ -1,18 +1,17 @@
 import '@ant-design/compatible/assets/index.css';
-import {Divider, Card, Row, Col, Table, Tag} from 'antd';
+import {Divider, Card, Row, Col, Table, Tag, Statistic} from 'antd';
 import React, {Suspense, Component} from 'react';
 import {GridContent} from '@ant-design/pro-layout';
 import Trend from "@/pages/DashboardAnalysis/components/Trend";
 import {Dispatch} from "redux";
 import {connect} from "dva";
-import {Line, StackedBar} from "@antv/g2plot";
-import ReactG2Plot from 'react-g2plot';
-import {TableListItem} from "./data";
+import {Aggregation} from "./data";
+import {ArrowDownOutlined, ArrowUpOutlined} from "@ant-design/icons/lib";
 
 interface ProfileBasicProps {
   loading: boolean;
   dispatch: Dispatch<any>;
-  earningsModel: TableListItem;
+  earningsModel: Partial<Aggregation>;
 }
 
 interface ProfileBasicState {
@@ -29,15 +28,11 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
 
   render() {
     const {earningsModel, loading} = this.props;
-    const {data = []} = earningsModel;
+    const {aggregation = {}} = earningsModel;
+    const {fundTypeValuation = [], todayGains = 0, todayEarningsRatio = 0, holdShareMoney = 0, holdPrices = 0} = aggregation;
 
-    var todayGains = 0, holdShareMoney = 0, money = 0;
-    for (var i in data) {
-      todayGains = todayGains + data[i].todayGains;
-      holdShareMoney = holdShareMoney + data[i].holdShareMoney;
-      money = money + data[i].money;
-    }
-
+    var earningsPrices = (holdShareMoney - holdPrices).toFixed(2);
+    var earningsRatio = (earningsPrices / holdPrices).toFixed(4);
     const columns = [
       {
         title: '基金类型',
@@ -120,72 +115,64 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
       },
     ];
 
-    // const data1 = [
-    //   { year: '1991', value: 3 },
-    //   { year: '1992', value: 4 },
-    //   { year: '1993', value: 3.5 },
-    //   { year: '1994', value: 5 },
-    //   { year: '1995', value: 4.9 },
-    //   { year: '1996', value: 6 },
-    //   { year: '1997', value: 7 },
-    //   { year: '1998', value: 9 },
-    //   { year: '1999', value: 13 },
-    // ];
-    //
-    // const config1 = {
-    //   title: {
-    //     visible: true,
-    //     text: '带数据点的折线图',
-    //   },
-    //   description: {
-    //     visible: true,
-    //     text: '将折线图上的每一个数据点显示出来，作为辅助阅读。',
-    //   },
-    //   forceFit: true,
-    //   padding: 'auto',
-    //   data1,
-    //   xField: 'year',
-    //   yField: 'value',
-    //   point: {
-    //     visible: true,
-    //   },
-    //   label: {
-    //     visible: true,
-    //     type: 'point',
-    //   },
-    // };
-
     return (
       <GridContent>
         <React.Fragment>
-          {/*<ReactG2Plot className="test" Ctor={Line} config={config1}/>*/}
           <Row gutter={16}>
             <Col span={8}>
               <Card title="今日收益" bordered={false}>
-                <Trend flag={todayGains < 0 ? 'down' : 'up'}>
-                  <Tag style={{marginRight: 4}} color={todayGains < 0 ? "green" : "red"}>
-                    {todayGains.toFixed(2)}元
-                  </Tag>
-                </Trend>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Statistic
+                      title="今日收益"
+                      value={todayGains}
+                      precision={2}
+                      valueStyle={{color: todayGains < 0 ? '#3f8600' : '#cf1322'}}
+                      prefix={todayGains < 0 ? <ArrowDownOutlined/> : <ArrowUpOutlined/>}
+                      suffix="元"
+                    />
+                  </Col>
+                  <Col span={12}>
+                    <Statistic
+                      title="收益比例"
+                      value={todayEarningsRatio}
+                      precision={2}
+                      valueStyle={{color: todayEarningsRatio < 0 ? '#3f8600' : '#cf1322'}}
+                      prefix={todayEarningsRatio < 0 ? <ArrowDownOutlined/> : <ArrowUpOutlined/>}
+                      suffix="%"
+                    />
+                  </Col>
+                </Row>
               </Card>
             </Col>
             <Col span={8}>
               <Card title="市值" bordered={false}>
-                <Trend flag={holdShareMoney < money ? 'down' : 'up'}>
-                  <span style={{marginRight: 4}}>{holdShareMoney.toFixed(2)}元</span>
-                </Trend>
+                <p>
+                  市值:
+                  <Trend flag={holdShareMoney < holdPrices ? 'down' : 'up'}>
+                    <Tag style={{marginRight: 4}} color={holdShareMoney < holdPrices ? "green" : "red"}>
+                      {holdShareMoney}元
+                    </Tag>
+                  </Trend>
+                </p>
+                <p>
+                  收益金额: {earningsPrices}元
+                </p>
+                <p>
+                  收益比例: {earningsRatio}%
+                </p>
               </Card>
             </Col>
             <Col span={8}>
               <Card title="持仓金额" bordered={false}>
-                {money.toFixed(2)}元
+                {holdPrices.toFixed(2)}元
               </Card>
             </Col>
           </Row>
 
           <Suspense fallback={null}>
             <Card bordered={false} style={{marginTop: 24,}}>
-              <Table columns={columns} dataSource={data} pagination={{pageSize: 50}}/>
+              <Table columns={columns} dataSource={fundTypeValuation} pagination={{pageSize: 50}}/>
             </Card>
           </Suspense>
         </React.Fragment>
@@ -199,10 +186,8 @@ export default connect(
      earningsModel,
      loading,
    }: {
-    earningsModel: TableListItem;
-    loading: {
-      effects: { [key: string]: boolean };
-    };
+    earningsModel: Partial<Aggregation>;
+    loading: { effects: { [key: string]: boolean } };
   }) => ({
     earningsModel,
     loading: loading.effects['earningsModel/fetchBasic'],

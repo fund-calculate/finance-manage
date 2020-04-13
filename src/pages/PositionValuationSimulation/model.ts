@@ -1,12 +1,12 @@
 import {AnyAction, Reducer} from 'redux';
 
 import {EffectsCommandMap} from 'dva';
-import {TableListItem} from './data';
-import {queryEarnings} from './service';
+import {Aggregation} from './data';
+import {queryAggregation} from './service';
 
 
 export interface ModalState {
-  data: TableListItem[];
+  aggregation: Partial<Aggregation>;
 }
 
 export type Effect = (
@@ -29,15 +29,15 @@ const EarningsModel: ModelType = {
   namespace: 'earningsModel',
 
   state: {
-    data: [],
+    aggregation: {},
   },
 
   effects: {
     * fetchBasic(_, {call, put}) {
-      const response = yield call(queryEarnings);
+      const response = yield call(queryAggregation);
       yield put({
         type: 'show',
-        payload: response.data
+        payload: response
       });
     },
   },
@@ -46,7 +46,7 @@ const EarningsModel: ModelType = {
     show(state, action) {
       return {
         ...(state as ModalState),
-        data: action.payload,
+        aggregation: action.payload.data,
       };
     },
   },

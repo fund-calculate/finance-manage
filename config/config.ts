@@ -139,19 +139,19 @@ export default {
               routes: [
                 {
                   path: '/fund/FundValuation',
-                  name: '估值模拟',
+                  name: '(自选)基金估值',
                   icon: 'smile',
                   component: './FundValuation',
                 },
                 {
                   path: '/fund/PositionValuationSimulation',
-                  name: '持仓估值收益',
+                  name: '(持仓)估值收益',
                   icon: 'smile',
                   component: './PositionValuationSimulation',
                 },
                 {
                   path: '/fund/fund_position',
-                  name: '持仓类型统计',
+                  name: '(持仓)类型统计',
                   icon: 'smile',
                   component: './fund_position',
                 },
