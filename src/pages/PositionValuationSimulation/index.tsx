@@ -1,5 +1,5 @@
 import '@ant-design/compatible/assets/index.css';
-import {Divider, Card, Row, Col, Table, Tag, Statistic} from 'antd';
+import {Divider, Card, Row, Col, Table, Tag, Statistic, Badge, Dropdown} from 'antd';
 import React, {Suspense, Component} from 'react';
 import {GridContent} from '@ant-design/pro-layout';
 import Trend from "@/pages/DashboardAnalysis/components/Trend";
@@ -24,6 +24,9 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
     dispatch({
       type: 'earningsModel/fetchBasic',
     });
+    dispatch({
+      type: 'earningsModel/setup',
+    });
   }
 
   render() {
@@ -33,6 +36,7 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
 
     var earningsPrices = (holdShareMoney - holdPrices).toFixed(2);
     var earningsRatio = (earningsPrices / holdPrices).toFixed(4);
+
     const columns = [
       {
         title: '基金类型',
