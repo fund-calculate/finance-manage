@@ -6,7 +6,15 @@ import Trend from "@/pages/DashboardAnalysis/components/Trend";
 import {Dispatch} from "redux";
 import {connect} from "dva";
 import {Aggregation} from "./data";
-import {ArrowDownOutlined, ArrowUpOutlined} from "@ant-design/icons/lib";
+import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  FrownTwoTone,
+  LikeOutlined,
+  LikeTwoTone,
+  SmileTwoTone,
+  DislikeTwoTone, MehTwoTone
+} from "@ant-design/icons/lib";
 
 interface ProfileBasicProps {
   loading: boolean;
@@ -150,26 +158,39 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
               </Card>
             </Col>
             <Col span={8}>
-              <Card title="市值" bordered={false}>
-                <p>
-                  市值:
-                  <Trend flag={holdShareMoney < holdPrices ? 'down' : 'up'}>
-                    <Tag style={{marginRight: 4}} color={holdShareMoney < holdPrices ? "green" : "red"}>
-                      {holdShareMoney}元
-                    </Tag>
-                  </Trend>
-                </p>
-                <p>
-                  收益金额: {earningsPrices}元
-                </p>
-                <p>
-                  收益比例: {earningsRatio}%
-                </p>
+              <Card title="总收益" bordered={false}>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Statistic
+                      title="总收益"
+                      value={earningsPrices}
+                      prefix={earningsPrices < 0 ? <DislikeTwoTone twoToneColor='#52c41a'/> :
+                        <LikeTwoTone twoToneColor='#eb2f96'/>}
+                      suffix="元"
+                    />
+                  </Col>
+                  <Col span={12}>
+                    <Statistic
+                      title="总收益率"
+                      value={earningsRatio}
+                      prefix={earningsRatio < 0 ? <FrownTwoTone twoToneColor='#52c41a'/> :
+                        <SmileTwoTone twoToneColor='#eb2f96'/>}
+                      suffix="%"
+                    />
+                  </Col>
+                </Row>
               </Card>
             </Col>
             <Col span={8}>
               <Card title="持仓金额" bordered={false}>
-                {holdPrices.toFixed(2)}元
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Statistic title="市值" value={holdShareMoney} prefix={<MehTwoTone/>} suffix="元"/>
+                  </Col>
+                  <Col span={12}>
+                    <Statistic title="持仓金额" value={holdPrices} suffix="元"/>
+                  </Col>
+                </Row>
               </Card>
             </Col>
           </Row>
