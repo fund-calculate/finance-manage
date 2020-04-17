@@ -10,7 +10,6 @@ import {
   ArrowDownOutlined,
   ArrowUpOutlined,
   FrownTwoTone,
-  LikeOutlined,
   LikeTwoTone,
   SmileTwoTone,
   DislikeTwoTone, MehTwoTone
@@ -43,7 +42,7 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
     const {fundTypeValuation = [], todayGains = 0, todayEarningsRatio = 0, holdShareMoney = 0, holdPrices = 0} = aggregation;
 
     var earningsPrices = (holdShareMoney - holdPrices).toFixed(2);
-    var earningsRatio = (earningsPrices / holdPrices).toFixed(4);
+    var earningsRatio = (earningsPrices / holdPrices * 100).toFixed(2);
 
     const columns = [
       {
@@ -136,7 +135,7 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
                 <Row gutter={16}>
                   <Col span={12}>
                     <Statistic
-                      title="今日收益"
+                      title="今日收益(更新时间:9:30)"
                       value={todayGains}
                       precision={2}
                       valueStyle={{color: todayGains < 0 ? '#3f8600' : '#cf1322'}}
