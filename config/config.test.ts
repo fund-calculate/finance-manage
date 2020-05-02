@@ -228,7 +228,7 @@ export default {
     'primary-color': defaultSettings.primaryColor,
   },
   define: {
-    'process.env.apiUrl': 'http://127.0.0.1:1000/',
+    'process.env.apiUrl': 'http://118.25.93.64:1000/',
     REACT_APP_ENV: REACT_APP_ENV || false,
     ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION:
       ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION || '', // preview.pro.ant.design only do not use in your production ; preview.pro.ant.design 专用环境变量，请不要在你的项目中使用它。
