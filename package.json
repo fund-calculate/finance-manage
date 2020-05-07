@@ -6,7 +6,7 @@
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
     "build": "umi build",
-    "build:test": "cross-env UMI_ENV=test REACT_APP_ENV=test MOCK=none umi build",
+    "build:test": "cross-env --max_old_space_size=5048 UMI_ENV=test REACT_APP_ENV=test MOCK=none umi build",
     "build:prod": "cross-env UMI_ENV=prod REACT_APP_ENV=prod MOCK=none umi build",
     "deploy": "npm run site && npm run gh-pages",
     "dev": "npm run start:dev",
