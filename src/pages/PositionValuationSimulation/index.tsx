@@ -50,6 +50,26 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
         dataIndex: 'type',
       },
       {
+        title: '当前估值涨幅',
+        dataIndex: 'valuationGains',
+        sorter: (a, b) => a.valuationGains - b.valuationGains,
+        render: (text: React.ReactNode, record: { valuationGains: number }) => (
+          <Trend flag={record.valuationGains < 0 ? 'down' : 'up'}>
+            <Tag style={{marginRight: 4}} color={record.valuationGains < 0 ? "green" : "red"}>{text}%</Tag>
+          </Trend>
+        ),
+      },
+      {
+        title: '今日收益',
+        dataIndex: 'todayGains',
+        sorter: (a, b) => a.todayGains - b.todayGains,
+        render: (text: React.ReactNode, record: { todayGains: number }) => (
+          <Trend flag={record.todayGains < 0 ? 'down' : 'up'}>
+            <Tag style={{marginRight: 4}} color={record.todayGains < 0 ? "green" : "red"}>{text}元</Tag>
+          </Trend>
+        ),
+      },
+      {
         title: '总持仓成本',
         dataIndex: 'money',
         sorter: (a, b) => a.money - b.money,
@@ -87,26 +107,6 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
         sorter: (a, b) => a.earningsRatio - b.earningsRatio,
         render: (text: React.ReactNode) => (
           <span>{text}%</span>
-        ),
-      },
-      {
-        title: '当前估值涨幅',
-        dataIndex: 'valuationGains',
-        sorter: (a, b) => a.valuationGains - b.valuationGains,
-        render: (text: React.ReactNode, record: { valuationGains: number }) => (
-          <Trend flag={record.valuationGains < 0 ? 'down' : 'up'}>
-            <Tag style={{marginRight: 4}} color={record.valuationGains < 0 ? "green" : "red"}>{text}%</Tag>
-          </Trend>
-        ),
-      },
-      {
-        title: '今日收益',
-        dataIndex: 'todayGains',
-        sorter: (a, b) => a.todayGains - b.todayGains,
-        render: (text: React.ReactNode, record: { todayGains: number }) => (
-          <Trend flag={record.todayGains < 0 ? 'down' : 'up'}>
-            <Tag style={{marginRight: 4}} color={record.todayGains < 0 ? "green" : "red"}>{text}元</Tag>
-          </Trend>
         ),
       },
       {
