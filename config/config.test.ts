@@ -100,38 +100,7 @@ export default {
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
-            },
-            {
-              path: '/welcome',
-              name: '分析页',
-              icon: 'smile',
-              component: './DashboardAnalysis',
-            },
-            {
-              name: '测试页面',
-              icon: 'smile',
-              path: '/test',
-              routes: [
-                {
-                  name: '图表测试',
-                  icon: 'smile',
-                  path: '/test/emptypage',
-                  component: './EmptyPage',
-                },
-                {
-                  name: 'BizCharts图表测试',
-                  icon: 'smile',
-                  path: '/test/bizchartsdemo',
-                  component: './BizChartsDemo',
-                },
-                {
-                  name: '基础详情页',
-                  icon: 'smile',
-                  path: '/test/profilebasic',
-                  component: './ProfileBasic',
-                },
-              ],
+              redirect: '/fund/FundValuation',
             },
             {
               name: '基金',
@@ -205,6 +174,37 @@ export default {
                   icon: 'smile',
                   path: '/earnings/earnings',
                   component: './earnings',
+                },
+              ],
+            },
+            {
+              name: '测试页面',
+              icon: 'smile',
+              path: '/test',
+              routes: [
+                {
+                  path: '/test/welcome',
+                  name: '分析页',
+                  icon: 'smile',
+                  component: './DashboardAnalysis',
+                },
+                {
+                  name: '图表测试',
+                  icon: 'smile',
+                  path: '/test/emptypage',
+                  component: './EmptyPage',
+                },
+                {
+                  name: 'BizCharts图表测试',
+                  icon: 'smile',
+                  path: '/test/bizchartsdemo',
+                  component: './BizChartsDemo',
+                },
+                {
+                  name: '基础详情页',
+                  icon: 'smile',
+                  path: '/test/profilebasic',
+                  component: './ProfileBasic',
                 },
               ],
             },

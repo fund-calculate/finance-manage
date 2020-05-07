@@ -12,7 +12,7 @@ import {
   FrownTwoTone,
   LikeTwoTone,
   SmileTwoTone,
-  DislikeTwoTone, MehTwoTone
+  DislikeTwoTone, MehTwoTone, PropertySafetyTwoTone
 } from "@ant-design/icons/lib";
 
 interface ProfileBasicProps {
@@ -129,11 +129,11 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
     return (
       <GridContent>
         <React.Fragment>
-          <Row gutter={16}>
-            <Col span={8}>
+          <Row gutter={16} style={{marginTop: -24,}}>
+            <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{marginTop: 24,}}>
               <Card title="今日收益" bordered={false}>
-                <Row gutter={16}>
-                  <Col span={12}>
+                <Row gutter={24}>
+                  <Col xl={12} lg={24} md={24} sm={24} xs={24}>
                     <Statistic
                       title="今日收益(更新时间:9:30)"
                       value={todayGains}
@@ -143,7 +143,7 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
                       suffix="元"
                     />
                   </Col>
-                  <Col span={12}>
+                  <Col xl={12} lg={24} md={24} sm={24} xs={24}>
                     <Statistic
                       title="收益比例"
                       value={todayEarningsRatio}
@@ -156,10 +156,10 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
                 </Row>
               </Card>
             </Col>
-            <Col span={8}>
+            <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{marginTop: 24,}}>
               <Card title="总收益" bordered={false}>
-                <Row gutter={16}>
-                  <Col span={12}>
+                <Row gutter={24}>
+                  <Col xl={12} lg={24} md={24} sm={24} xs={24}>
                     <Statistic
                       title="总收益"
                       value={earningsPrices}
@@ -168,7 +168,7 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
                       suffix="元"
                     />
                   </Col>
-                  <Col span={12}>
+                  <Col xl={12} lg={24} md={24} sm={24} xs={24}>
                     <Statistic
                       title="总收益率"
                       value={earningsRatio}
@@ -180,14 +180,14 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
                 </Row>
               </Card>
             </Col>
-            <Col span={8}>
+            <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{marginTop: 24,}}>
               <Card title="持仓金额" bordered={false}>
-                <Row gutter={16}>
-                  <Col span={12}>
+                <Row gutter={24}>
+                  <Col xl={12} lg={24} md={24} sm={24} xs={24}>
                     <Statistic title="市值" value={holdShareMoney} prefix={<MehTwoTone/>} suffix="元"/>
                   </Col>
-                  <Col span={12}>
-                    <Statistic title="持仓金额" value={holdPrices} suffix="元"/>
+                  <Col xl={12} lg={24} md={24} sm={24} xs={24}>
+                    <Statistic title="持仓金额" value={holdPrices} prefix={<PropertySafetyTwoTone/>} suffix="元"/>
                   </Col>
                 </Row>
               </Card>
