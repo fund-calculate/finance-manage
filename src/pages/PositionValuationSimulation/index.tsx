@@ -98,7 +98,7 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
         dataIndex: 'earningsPrices',
         sorter: (a, b) => a.earningsPrices - b.earningsPrices,
         render: (text: React.ReactNode) => (
-          <span>{text}元</span>
+          <span style={{color: text < 0 ? '#52c41a' : '#f5222d'}}>{text}元</span>
         ),
       },
       {
@@ -106,7 +106,7 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
         dataIndex: 'earningsRatio',
         sorter: (a, b) => a.earningsRatio - b.earningsRatio,
         render: (text: React.ReactNode) => (
-          <span>{text}%</span>
+          <span style={{color: text < 0 ? '#52c41a' : '#f5222d'}}>{text}%</span>
         ),
       },
       {
@@ -184,7 +184,9 @@ class ProfileBasic extends Component<ProfileBasicProps, ProfileBasicState> {
               <Card title="持仓金额" bordered={false}>
                 <Row gutter={24}>
                   <Col xl={12} lg={24} md={24} sm={24} xs={24}>
-                    <Statistic title="市值" value={holdShareMoney} prefix={<MehTwoTone/>} suffix="元"/>
+                    <Statistic title="市值" value={holdShareMoney}
+                               prefix={holdShareMoney < holdPrices ? <FrownTwoTone twoToneColor='#52c41a'/> :
+                                 <SmileTwoTone twoToneColor='#eb2f96'/>} suffix="元"/>
                   </Col>
                   <Col xl={12} lg={24} md={24} sm={24} xs={24}>
                     <Statistic title="持仓金额" value={holdPrices} prefix={<PropertySafetyTwoTone/>} suffix="元"/>
